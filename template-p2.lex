@@ -85,21 +85,21 @@ bool apply_operation(std::function<double(double, double)> op) {
 }
 "+" {
   if (!apply_operation(std::plus<double>())) {
-    LexerError("Insufficient Operands.");
+    LexerError("Insufficient # of operands for `+`\n");
     return 0;
   }
   return Token::ADD;
 }
 "-" {
   if (!apply_operation(std::minus<double>())) {
-    LexerError("Insufficient Operands.");
+    LexerError("Insufficient # of operands for `-`\n");
     return 0;
   }
   return Token::SUB;
 }
 "*" {
   if (!apply_operation(std::multiplies<double>())) {
-    LexerError("Insufficient Operands.");
+    LexerError("Insufficient # of operands for `*`\n");
     return 0;
   }
   return Token::MUL;
@@ -114,7 +114,7 @@ bool apply_operation(std::function<double(double, double)> op) {
     return a / b;
   });
   if (!res) {
-    LexerError("insufficient operands.");
+    LexerError("Insufficient # of operands for `/`\n");
     return 0;
   }
 
@@ -125,14 +125,14 @@ bool apply_operation(std::function<double(double, double)> op) {
     return std::pow(a, b);
   });
   if (!res) {
-    LexerError("insufficent operands.");
+    LexerError("Insufficient # of operands for `^`\n");
     return 0;
   }
   return Token::EXP;
 }
 "%" {
   if (ws.size() < 2) {
-    LexerError("insufficient operands.");
+    LexerError("Insufficient # of operands for `%`\n");
     return 0;
   }
 
@@ -161,8 +161,9 @@ bool apply_operation(std::function<double(double, double)> op) {
 }
 
 . {
-  std::cerr << "Error, unexpected character '" << YYText() << "' encountered.\n";
-  LexerError("Exiting due to unexpected character");
+  //std::cerr << "Error, unexpected character '" << YYText() << "' encountered.\n";
+  //LexerError("Exiting due to unexpected character");
+  LexerError("Unexpected Character\n");
 }
 %%
 
@@ -180,7 +181,7 @@ int main() {
       std::cout << "Result: " << std::get<double>(result.value) << std::endl;
     }
   } else {
-    std::cerr << "Error: Expression did not reduce to a single value" << std::endl;
+    std::cerr << "Expression does not reduce to a single answer" << std::endl;
   }
   
   return 0;
