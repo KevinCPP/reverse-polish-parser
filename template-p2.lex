@@ -69,7 +69,6 @@ bool apply_operation(std::function<double(double, double)> op) {
 %option noyywrap
 %option nodefault
 %option outfile="Scanner.cpp"
-%option debug
 
 %%
 [0-9]+ {
